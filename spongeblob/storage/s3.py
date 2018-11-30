@@ -14,11 +14,9 @@ class S3(Storage):
     Storage base class
     """
 
-    def __init__(self, aws_key, aws_secret, bucket_name, boto_config=None):
+    def __init__(self, bucket_name, boto_config=None):
         """Setup a S3 storage client object
 
-        :param str aws_key: AWS key for the S3 bucket
-        :param str aws_secret: AWS secret for the S3 bucket
         :param str bucket_name: AWS S3 bucket name to connect to
         :param botocore.client.Config boto_config: Expects a botocore.client.Config object
                                                    for boto s3 client connection configuration
@@ -29,10 +27,7 @@ class S3(Storage):
 
         # NOTE: default botocore config values will be used if boto_config
         # is passed as `None`
-        self.client = boto3.client('s3',
-                                   aws_access_key_id=aws_key,
-                                   aws_secret_access_key=aws_secret,
-                                   config=boto_config)
+        self.client = boto3.client('s3', config=boto_config)
         logger.debug("Created s3 client object: {0}".format(self.client))
 
     @classmethod
